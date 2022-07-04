@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= productName %></title>
+
+    <meta charset="utf-8">
+    <meta name="description" content="<%= productDescription %>">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>">
+
+    <link rel="icon" type="image/png" sizes="128x128" href="icons/favicon-128x128.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="icon" type="image/ico" href="favicon.ico">
+
+    <style>
+      html, body {
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      @keyframes loadingIn {
+        0%,30% {
+          filter: blur(1vmin);
+          opacity: 0;
+        }
+
+        100% {
+          filter: blur(0);
+          opacity: 1;
+        }
+      }
+
+      .loading {
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        position: fixed;
+        z-index: 999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .loading h1{
+        width: 56vmin;
+        color: white;
+        text-align: center;
+        font-size: 10vmin;
+        font-weight: normal;
+        margin: 0;
+        line-height: normal;
+        animation-name: loadingIn;
+        animation-duration: 4s;
+      }
+
+      .loading h2 {
+        color: white;
+        font-size: 8vmin;
+        font-weight: normal;
+        height: 0;
+        margin: 4vmin 0 0 0;
+        transform: translateY(100%) scale(0.1);
+        opacity: 0;
+        line-height: 10vmin;
+      }
+
+      .loading.mounted.animated {
+        visibility: hidden;
+        opacity: 0;
+        transition-property: opacity, visibility;
+        transition-duration: 2s;
+        will-change: opacity;
+      }
+
+      .loading.animated.check {
+        transition-delay: 3s;
+      }
+
+      .loading.animated.check h2 {
+        opacity: 1;
+        transform: unset;
+        height: 10vmin;
+        transition-property: opacity, transform, height;
+        transition-duration: 2s;
+        will-change: opacity, transform, height;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading">
+      <h1>二十九世纪影视交流</h1>
+      <h2>开始答题</h2>
+    </div>
+    <script>
+      document.querySelector("body>.loading")
+        .addEventListener("animationend",()=>{
+          document.querySelector("body>.loading").classList.add("animated");
+        })
+    </script>
+    <!-- quasar:entry-point -->
+  </body>
+</html>
