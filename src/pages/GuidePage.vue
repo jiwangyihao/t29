@@ -1,6 +1,6 @@
 <!--suppress HtmlRequiredAltAttribute -->
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import CryptoJS from "crypto-js";
 import { store } from "src/store";
 
@@ -18,7 +18,7 @@ const qifeiExpanded = ref(false);
 //const laowangExpanded = ref(false);
 
 const stepper = ref(null);
-/*
+
 const data = ref({
   guide: {
     title: "入群教程",
@@ -36,6 +36,7 @@ const data = ref({
       "Telegram 作为一个拥有 7 亿（全球）月活跃用户的世界第五大应用，自然无法在国内直接访问（笑",
       "因此在正式开始之前，我们要安装一个 VPN。",
       "下面列出了几个我认为还算好用的 VPN，按照推荐程度排序。你可以从中选择一个你喜欢的下载。",
+      "对于苹果用户，很抱歉之前没有考虑到这方面的内容。苹果闭环的生态决定了它不能像安卓一样。下面新增了由小牛 VPN 提供的苹果教程。请在换区之后自行下载 VPN 以及 Telegram 软件，并从“加入群组”一节继续",
     ],
     vpnList: [
       {
@@ -51,6 +52,13 @@ const data = ref({
         caption: "节点丰富",
         link: "https://bitbucket.org/AmbroseLee/gofly/raw/master/gofly4.2.0.apk",
         expanded: false,
+      },
+      {
+        id: "xiaoniu",
+        name: "【苹果】小牛加速器",
+        caption: "苹果相关教程",
+        link: "https://aoxvpn.cc/zhs/iosdownload/",
+        expanded: computed(() => false),
       },
     ],
     btn: {
@@ -117,7 +125,7 @@ const data = ref({
     paras: ["现在我们已经完成了所有设置，还愣着干嘛？去群里啊！"],
   },
 });
-
+/*
 console.log(
   CryptoJS.AES.encrypt(JSON.stringify(data.value), "陈晴").toString()
 );
@@ -127,7 +135,7 @@ console.log(
     "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",
     "陈晴"
   ).toString(CryptoJS.enc.Utf8)
-);*/
+);
 
 const data = ref(
   JSON.parse(
@@ -136,7 +144,7 @@ const data = ref(
       store.secret
     ).toString(CryptoJS.enc.Utf8)
   )
-);
+);*/
 </script>
 
 <template>
