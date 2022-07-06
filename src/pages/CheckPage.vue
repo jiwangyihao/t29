@@ -138,6 +138,12 @@ function check() {
 
   if (questions.value[9].check && score / questions.value.length > 0.6) {
     store.secret = questions.value[9].input;
+    store.storage
+      .set("secret", {
+        value: store.secret,
+        ttl: 24 * 60 * 60 * 1000, //保留1天
+      })
+      .then((res) => console.log(res));
     router.push("/guide");
   } else {
     router.push("/cheat");
